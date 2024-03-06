@@ -4,19 +4,65 @@ using UnityEngine;
 
 public class DetecterClic : MonoBehaviour
 {
-    [SerializeField] GameObject joueur;
-    // Start is called before the first frame update
+    [SerializeField] private Collider colliderPlan;  // Le plan pour détecter où est le clic
+
+    private Rigidbody _rbody;   // Le rigidbody
+    private bool _mouvementRequis; // On déplace dans le FixedUpdate
+    private Vector3 _prochainePosition; // L'endroit où on se déplace
+
     void Start()
     {
-        
+        _rbody = GetComponent<Rigidbody>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
-            Debug.Log(Input.mousePosition);
+            Vector3? positionClic = DeterminerClic();
+            if (positionClic != null)
+            {
+                _prochainePosition = positionClic.Value;
+                Debug.Log("Position finale: " + _prochainePosition.ToString());
+                _mouvementRequis = true;
+            }
         }
+    }
+
+    void FixedUpdate()
+    {
+        if (_mouvementRequis)
+        {
+            _rbody.MovePosition(_prochainePosition);
+            _mouvementRequis = false;
+        }
+    }
+
+    /**
+     * Méthode qui vérifie si le clic est sur le plan. Si le clic est à l'extérieur
+     * alors, on retourne null
+     */
+    private Vector3? DeterminerClic()
+    {
+        Vector3 positionSouris = Input.mousePosition;
+        Vector3? pointClique = null;
+
+        // Trouver le lien avec la caméra
+        Ray ray = Camera.main.ScreenPointToRay(positionSouris);
+
+        RaycastHit hit = new RaycastHit();
+
+        if (Physics.Raycast(ray, out hit))
+        {
+            Debug.Log("Point de contact: " + hit.point);
+
+            // Vérifier si l'objet touché est le plan.
+            if (hit.collider == colliderPlan)
+            {
+                // Le vecteur est initialise ici car le clic est sur le plan
+                pointClique = hit.point;
+            }
+        }
+        return pointClique;
     }
 }

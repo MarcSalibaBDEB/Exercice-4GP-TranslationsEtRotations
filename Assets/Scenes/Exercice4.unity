@@ -588,7 +588,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 489986473044758157, guid: 058429be56179064b958eb834220f7a8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 489986473044758157, guid: 058429be56179064b958eb834220f7a8, type: 3}
       propertyPath: m_LocalPosition.z
@@ -651,9 +651,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 5310649604948862580}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 969e3c5769826f4448de73a6a03a55bb, type: 3}
+  m_Script: {fileID: 11500000, guid: 4305fd80f921175458428dc744d34612, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  vitesse: 5
   colliderPlan: {fileID: 2117706773}
 --- !u!54 &5310649604948862586
 Rigidbody:
